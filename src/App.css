@@ -38,12 +38,13 @@ body {
   /* Modal-stilar */
   .modal-dialog {
     max-width: 95%;
+    height: 95vh;
   }
   
   .modal-content {
     color: black;
     overflow-y: auto;
-    max-height: 80vh;
+    max-height: 95vh;
   }
   
   /* Checkbox-stilar */
@@ -63,6 +64,13 @@ body {
     padding: 0;
     margin: 0 0 20px 0; /* 20px bottenmarginal */
   }
-  
 
-  
+.narrow-number-input {
+  width: 3em;
+}
+
+.task-card {
+  background-color: white;
+  color: black;
+  /* Lägg till fler stilar som behövs */
+}
