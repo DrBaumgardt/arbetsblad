@@ -24,13 +24,13 @@ const GoalSelector: React.FC<GoalSelectorProps> = ({ data, selectedGoals, onSele
   });
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'row' }}>
+    <div className="worksheetMenu">
       {Object.keys(groupedGoals).map((area, index) => (
-        <div key={index}>
+        <div key={index} className="area">
           <h3>{area}</h3>
           <ul>
             {groupedGoals[area].map((goal, index) => (
-              <li key={index}>
+              <li key={index} className="checkbox-container">
                 <input
                   type="checkbox"
                   checked={selectedGoals.includes(goal)}
@@ -43,7 +43,7 @@ const GoalSelector: React.FC<GoalSelectorProps> = ({ data, selectedGoals, onSele
         </div>
       ))}
     </div>
-  );
+  );  
 };
 
 export default GoalSelector;

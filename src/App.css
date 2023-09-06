@@ -1,0 +1,68 @@
+/* Allmänna stilar */
+body {
+    background-color: #023430;
+    color: white;
+  }
+
+  /* För den övergripande container */
+.worksheetMenu {
+    padding: 0 1em;
+    background-color: #fff;
+    font-size: 0.95em;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+/* För varje område */
+  .area {
+    width: calc(25% - 1em);
+    margin-bottom: 1em;
+  }
+  
+  /* Knappstil */
+  .add-task-button {
+    background-color: #00ed64;
+    color: #001e2b;
+    padding: 10px 10px;
+    border-radius: 3px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  .add-task-button:hover {
+    border-radius: 12px;
+  }
+  
+  /* Modal-stilar */
+  .modal-dialog {
+    max-width: 95%;
+  }
+  
+  .modal-content {
+    color: black;
+    overflow-y: auto;
+    max-height: 80vh;
+  }
+  
+  /* Checkbox-stilar */
+  .checkbox-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  
+  .checkbox-container input {
+    margin-right: 8px;
+  }
+  
+  /* Lista-stilar */
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px 0; /* 20px bottenmarginal */
+  }
+  
+
+  
