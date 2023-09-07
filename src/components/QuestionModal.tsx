@@ -46,6 +46,7 @@ const QuestionModal: React.FC<QuestionModalProps> = ({
   };
 
   const handleAdd = () => {
+    console.log("handleAdd is called");
     const selectedTasks: any[] = [];
 
     console.log("Selected Goals:", selectedGoals);

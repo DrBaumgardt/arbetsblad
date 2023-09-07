@@ -16,14 +16,16 @@
     "katex": "^0.16.8",
     "mongodb": "^6.0.0",
     "react": "^18.2.0",
-    "react-beautiful-dnd": "^13.1.1",
+    "react-dnd": "^16.0.1",
+    "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "^18.2.0",
+    "react-dragula": "^1.1.17",
     "react-katex": "^3.0.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",
-    "@types/react-beautiful-dnd": "^13.1.4",
     "@types/react-dom": "^18.2.7",
+    "@types/react-katex": "^3.0.0",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
     "@vitejs/plugin-react": "^4.0.3",
