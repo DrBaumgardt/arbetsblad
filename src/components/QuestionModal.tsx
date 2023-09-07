@@ -5,18 +5,24 @@ import TypeSelector from "./TypeSelector";
 interface QuestionModalProps {
   data: any[];
   addSelectedTasks: (tasks: any[]) => void;
-  clearAllTasks: () => void; // Ny prop
+  clearAllTasks: () => void;
+  alreadySelectedTasks: string[];
 }
+
+const randomSelect = (arr: any[], count: number) => {
+  const shuffled = [...arr].sort(() => 0.5 - Math.random());
+  return shuffled.slice(0, count);
+};
 
 const QuestionModal: React.FC<QuestionModalProps> = ({
   data,
   addSelectedTasks,
   clearAllTasks,
+  alreadySelectedTasks, // Lägg till denna rad
 }) => {
   // Lägg till addSelectedTasks här
   const [currentStep, setCurrentStep] = useState(1);
   const [selectedGoals, setSelectedGoals] = useState<string[]>([]);
-  const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
   const [typeCounts, setTypeCounts] = useState<Record<string, number>>({});
 
   const onSelectGoal = (goal: string) => {
@@ -24,14 +30,6 @@ const QuestionModal: React.FC<QuestionModalProps> = ({
       setSelectedGoals(selectedGoals.filter((g) => g !== goal));
     } else {
       setSelectedGoals([...selectedGoals, goal]);
-    }
-  };
-
-  const onSelectType = (type: string) => {
-    if (selectedTypes.includes(type)) {
-      setSelectedTypes(selectedTypes.filter((t) => t !== type));
-    } else {
-      setSelectedTypes([...selectedTypes, type]);
     }
   };
 
@@ -44,33 +42,47 @@ const QuestionModal: React.FC<QuestionModalProps> = ({
   const handleClose = () => {
     setCurrentStep(1);
     setSelectedGoals([]);
-    setSelectedTypes([]);
     setTypeCounts({}); // Nollställ räknarna
   };
 
   const handleAdd = () => {
-    // Här samlar vi alla valda uppgifter
     const selectedTasks: any[] = [];
 
-    // Vi går igenom varje lärandemål och varje uppgiftstyp för att välja uppgifter
+    console.log("Selected Goals:", selectedGoals);
+    console.log("Type Counts:", typeCounts);
+    console.log("Already Selected Tasks before adding:", alreadySelectedTasks); // NEW
+
     selectedGoals.forEach((goal) => {
       const tasksForGoal = data.filter((item) => item.lärandemål === goal);
 
-      selectedTypes.forEach((type) => {
-        const tasksForType = tasksForGoal.filter((item) => item.typ === type);
+      console.log(`Tasks for Goal "${goal}":`, tasksForGoal);
+
+      Object.keys(typeCounts).forEach((type) => {
+        let tasksForType = tasksForGoal.filter((item) => item.typ === type);
+
+        console.log(`Tasks for Type "${type}":`, tasksForType);
+
+        // Exclude already selected tasks
+        tasksForType = tasksForType.filter(
+          (task) => !alreadySelectedTasks.includes(task._id) // Ensure _id is used here
+        );
+
+        console.log(
+          `Tasks for Type "${type}" after excluding selected:`,
+          tasksForType
+        ); // NEW
+
         const count = typeCounts[type] || 0;
 
-        // Här kan du implementera logiken för att välja `count` antal uppgifter av en viss typ och lärandemål
-        // För enkelhetens skull tar vi bara de första `count` uppgifterna
-        const selectedForType = tasksForType.slice(0, count);
+        // Randomly select 'count' number of tasks
+        const selectedForType = randomSelect(tasksForType, count);
+        console.log(`Selected for Type "${type}":`, selectedForType);
+
         selectedTasks.push(...selectedForType);
       });
     });
 
-    // Lägg till de valda uppgifterna
     addSelectedTasks(selectedTasks);
-
-    // Stäng modalen och återställ steg och valda mål och typer
     handleClose();
   };
 
@@ -92,7 +104,6 @@ const QuestionModal: React.FC<QuestionModalProps> = ({
             <TypeSelector
               data={data}
               selectedGoals={selectedGoals}
-              onSelectType={onSelectType}
               typeCounts={typeCounts}
               setTypeCounts={setTypeCounts}
             />

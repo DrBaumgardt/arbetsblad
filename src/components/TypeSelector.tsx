@@ -3,7 +3,6 @@ import React from "react";
 interface TypeSelectorProps {
   data: any[];
   selectedGoals: string[];
-  onSelectType: (type: string, count: number) => void;
   typeCounts: Record<string, number>;
   setTypeCounts: React.Dispatch<React.SetStateAction<Record<string, number>>>;
 }
@@ -11,7 +10,6 @@ interface TypeSelectorProps {
 const TypeSelector: React.FC<TypeSelectorProps> = ({
   data,
   selectedGoals,
-  onSelectType,
   typeCounts,
   setTypeCounts,
 }) => {
@@ -38,8 +36,7 @@ const TypeSelector: React.FC<TypeSelectorProps> = ({
   });
 
   const handleInputChange = (type: string, value: number) => {
-    setTypeCounts({ ...typeCounts, [type]: value }); // Här används setTypeCounts från props
-    onSelectType(type, value);
+    setTypeCounts({ ...typeCounts, [type]: value });
   };
 
   return (

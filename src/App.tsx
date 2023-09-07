@@ -1,18 +1,27 @@
 import React, { useEffect, useState } from "react";
 import QuestionModal from "./components/QuestionModal";
-import TaskCard from "./components/TaskCard"; // Importera den nya TaskCard-komponenten
+import TaskCard from "./components/TaskCard";
 import { fetchData } from "./api";
 
 const App: React.FC = () => {
   const [data, setData] = useState<any[]>([]);
   const [selectedTasks, setSelectedTasks] = useState<any[]>([]);
+  const [alreadySelectedTasks, setAlreadySelectedTasks] = useState<string[]>(
+    []
+  );
 
   const addSelectedTasks = (newTasks: any[]) => {
-    setSelectedTasks([...selectedTasks, ...newTasks]);
+    const newSelectedTasks = [...selectedTasks, ...newTasks];
+    setSelectedTasks(newSelectedTasks);
+    setAlreadySelectedTasks([
+      ...alreadySelectedTasks,
+      ...newTasks.map((task) => task._id),
+    ]);
   };
 
   const clearAllTasks = () => {
-    setSelectedTasks([]); // Rensa alla valda uppgifter
+    setSelectedTasks([]);
+    setAlreadySelectedTasks([]); // Clear the list of already selected tasks
   };
 
   useEffect(() => {
@@ -32,6 +41,7 @@ const App: React.FC = () => {
         data={data}
         addSelectedTasks={addSelectedTasks}
         clearAllTasks={clearAllTasks}
+        alreadySelectedTasks={alreadySelectedTasks} // Pass down the list of already selected tasks
       />
       <div style={{ maxWidth: "800px", margin: "0 auto" }}>
         {selectedTasks.map((task, index) => (
