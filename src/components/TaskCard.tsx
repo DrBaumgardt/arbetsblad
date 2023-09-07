@@ -1,6 +1,6 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { useDrag, useDrop, DropTargetMonitor } from "react-dnd";
-import RenderLatex from "./RenderLatex"; // Importera den nya komponenten
+import RenderLatex from "./RenderLatex";
 
 interface TaskCardProps {
   task: any;
@@ -15,6 +15,7 @@ interface DragItem {
 
 const TaskCard: React.FC<TaskCardProps> = ({ task, index, moveCard }) => {
   const ref = useRef<HTMLDivElement>(null);
+  const [isDragging, setIsDragging] = useState(false);
 
   const [, drop] = useDrop<DragItem, any, any>({
     accept: "CARD",
@@ -51,9 +52,15 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, index, moveCard }) => {
   const [, drag] = useDrag({
     type: "CARD",
     item: { index },
+    collect: (monitor) => {
+      setIsDragging(monitor.isDragging());
+    },
   });
 
-  drag(drop(ref));
+  drop(ref);
+  drag(ref);
+
+  let backgroundColor = isDragging ? "lightgreen" : "white";
 
   return (
     <div
@@ -64,7 +71,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, index, moveCard }) => {
         borderRadius: "10px",
         padding: "10px",
         marginBottom: "10px",
-        backgroundColor: "white", // Lägg till denna rad
+        backgroundColor,
       }}
     >
       <p>
